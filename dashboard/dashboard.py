@@ -7,7 +7,7 @@ import streamlit as st
 sns.set(style='white')
 
 # Menyiapkan data day_df
-day_df = pd.read_csv("main_data.csv")
+day_df = pd.read_csv("dashboard/main_data.csv")
 
 day_df.rename(columns={
     'dteday': 'date',
