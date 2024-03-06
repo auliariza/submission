@@ -54,38 +54,13 @@ def create_weather_rent_df(df):
     })
     return weather_rent_df
 
-# Membuat komponen filter
-min_date = pd.to_datetime(day_df['date']).dt.date.min()
-max_date = pd.to_datetime(day_df['date']).dt.date.max()
-
-with st.sidebar:
-    st.image('https://i.pinimg.com/564x/22/3b/74/223b74ef5162b74938fc76adecd39e36.jpg')
-
-    # Mengambil start_date & end_date dari date_input
-    start_date, end_date = st.date_input(
-        label='Rentang Waktu',
-        min_value= min_date,
-        max_value= max_date,
-        value=[min_date, max_date]
-    )
-
-main_df = day_df[(day_df['date'] >= str(start_date)) & 
-                (day_df['date'] <= str(end_date))]
-
-# Menyiapkan berbagai dataframe
-season_rent_df = create_season_rent_df(main_df)
-weekday_rent_df = create_weekday_rent_df(main_df)
-workingday_rent_df = create_workingday_rent_df(main_df)
-holiday_rent_df = create_holiday_rent_df(main_df)
-weather_rent_df = create_weather_rent_df(main_df)
-
 # Membuat judul dashboard
 st.header('Dashboard Penyewaan Sepeda')
 
 # Visualizations
-years = main_df['year'].unique()
-casual_usage = main_df.groupby('year')['casual'].sum()
-registered_usage = main_df.groupby('year')['registered'].sum()
+years = day_df['year'].unique()
+casual_usage = day_df.groupby('year')['casual'].sum()
+registered_usage = day_df.groupby('year')['registered'].sum()
 bar_positions = np.arange(len(years))
 bar_width = 0.35
 
